@@ -1,0 +1,7 @@
+.code-result {
+  margin-top: 15px;
+}
+.code-result code {
+  white-space: pre;
+}
+

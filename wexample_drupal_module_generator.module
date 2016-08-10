@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * Implements hook_init().
+ */
+function wexample_drupal_module_generator_init() {
+  if (implode('/', arg()) == 'resources/drupal/generator/module') {
+    drupal_add_js(drupal_get_path('module', 'wexample_drupal_module_generator') . '/wexample_drupal_module_generator.js');
+    drupal_add_css(drupal_get_path('module', 'wexample_drupal_module_generator') . '/wexample_drupal_module_generator.css');
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function wexample_drupal_module_generator_menu() {
+  $items                                      = array();
+  $items['resources/drupal/generator/module'] = array(
+    'title'            => 'Drupal module info generator',
+    'description'      => 'Generate a custom Drupal module',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('wexample_drupal_module_generator_form'),
+    'access arguments' => array('access content'),
+    'type'             => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+function wexample_drupal_module_generator_form() {
+  $form = array(
+    '#prefix' => t('Use this tool to generate your .info file for Drupal 7.x, Drupal 8.X is not yet supported. '),
+    'name'         => array(
+      '#type'  => 'textfield',
+      '#title' => 'Name'
+    ),
+    'description'  => array(
+      '#type'  => 'textfield',
+      '#title' => 'Description'
+    ),
+    'core'         => array(
+      '#type'          => 'select',
+      '#title'         => 'Core version',
+      '#default_value' => '7.x',
+      '#options'       => array(
+        '7.x' => 'Drupal 7.x'
+      )
+    ),
+    'version'      => array(
+      '#type'          => 'textfield',
+      '#title'         => 'Module version',
+      '#default_value' => '1.0'
+    ),
+    'package'      => array(
+      '#type'          => 'textfield',
+      '#title'         => 'Package',
+    ),
+    'dependencies' => array(
+      '#type'  => 'textfield',
+      // Multiple row field seems too
+      // complicated for the time I have to spend.
+      '#title' => 'Dependencies (comma separated)',
+    ),
+    '#suffix'      => '<div class="well code-result"><code id="wexample_drupal_module_generator-info"></code></div>'
+  );
+  return $form;
+}

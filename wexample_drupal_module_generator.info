@@ -1,0 +1,6 @@
+name = Wexample Drupal module generator
+description = Wexample Drupal module generator
+core = 7.x
+
+package = Wexample tools
+version = 7.x-1.0
